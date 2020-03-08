@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/head %>
+    <title>Profile-OnlineShopper</title>
+  </head>
+  <body>
+    <% include ../partials/navbar %>
+    <div class="container profile">
+      <div class="row">
+        <div class="col-sm-6 offset-sm-3 col-md-6 offset-md-3">
+          <hr class="colorgraph" />
+          <br />
+          <h1>Profile for <%= user.profile.name%></h1>
+          <img src=<%=user.profile.picture%> class="img-circle img-responsive
+          img-center" alt="" />
+          <img
+            class="img-circle img-responsive
+          img-center"
+            alt=""
+            style="height:200px; width:200px;"
+            src="/images/profile-imageholder.png"
+          />
+          <br /><br />
+          <p>Name: <%= user.profile.name %></p>
+          <p>Email: <%= user.email %></p>
+          <p>Address: <%= user.address %></p>
+          <a
+            class="btn btn-primary btn-lg"
+            style="color:white"
+            href="/api/users/update-profile"
+            >Edit</a
+          >
+          <hr class="colorgraph" />
+          <br />
+          <h3>Purchase History:</h3>
+          <table class="table table-striped sticky-header">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for( let i = 0; i < user.history.length; i++ ) { %>
+              <tr>
+                <td><%=user.history[i].timestamp %></td>
+                <td><%= user.history[i].item.name %></td>
+                <td>$<%= user.history[i].paid %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+          <hr class="colorgraph" />
+          <br />
+        </div>
+      </div>
+    </div>
+    <% include ../partials/scripts %>
+  </body>
+</html>

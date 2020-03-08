@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <% include ../partials/head %> 
+    <title>Online Shopper</title>
+   
+    <style>
+      .card-img-top {
+        height: 300px;
+      }
+      .my-h1{
+        padding-top:30px;
+      }
+      .my-category{
+        margin-bottom: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+   <% include ../partials/navbar %>
+    <div id="container" class="fluid">
+      <main role="main">
+      
+        <% include ../partials/jumbotron %> 
+
+        <div class="container">
+          <div class="row">
+              <div class="col-md-12 my-category">
+                <h1>Category: <%=products[0].category.name %> </h1>
+              </div>
+              <% for (let i = 0; i < 24; i++){%>
+                <div class="col-md-4" style="margin-bottom:30px; ">
+                  <div class="card" style="width: 20rem;">
+                 <!--  <a style="text-decoration:none;" href = "#" >-->
+                     <a style="text-decoration:none;" href = "/api/products/single-product/<%= products[i]._id %>" >
+                      <img
+                          src="<%= products[i].image %>"
+                          class="card-img-top"
+                          alt="..."
+                      />
+                      <div class="card-body">
+                          <h5 class="card-title"><%= products[i].name %> </h5>
+                          <p class="card-text">
+                          Category: <%=products[i].category.name %> 
+                          </p>
+                          <p class="card-text">
+                          $<%=products[i].price %> 
+                          </p><br />
+                          
+                          <!--<a href="#" class="btn btn-success">Buy Now</a>-->
+                         <a href="/api/products/single-product/<%= products[i]._id  %>" class="btn btn-success">Buy Now</a>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              <% } %>    
+          </div>
+        </div>
+      </main>
+     <% include ../partials/footer %> 
+    </div>
+     <% include ../partials/scripts %>
+  </body>
+</html>

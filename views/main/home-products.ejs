@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico" />
+
+    <title>Online Shopper</title>
+
+    <style>
+      html {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .my-jumbotron {
+        position: relative;
+        background: linear-gradient(
+            47deg,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 176, 0, 0.2)
+          ),
+          url('/images/square.jpg') center center;
+        background-color: #172d1c;
+
+        width: 100%;
+
+        background-size: cover;
+        color: #fff;
+        height: 18em;
+      }
+      .card-img-top {
+        height: 300px;
+      }
+      .my-h1 {
+        padding-top: 30px;
+      }
+      .my-category {
+        margin-bottom: 50px;
+      }
+      .my-pagination{
+        
+        width:30px;
+        height:30px;
+        text-align:center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <% include ../partials/navbar %>
+    <div id="container" class="fluid">
+      <main role="main">
+        <div class="jumbotron my-jumbotron">
+          <h1 class="display-1 my-h1">ONLINE SHOPPER</h1>
+          <h4 class="display-5">Your Home Shopping Service</h4>
+        </div>
+
+        <div class="container">
+          <div class="row">
+         
+            <% for (let i = 0; i < products.length; i++){%>
+               
+            <div class="col-md-4" style="margin-bottom:30px; ">
+              <div
+                class="card" style="border-radius:0"
+              >
+                <a
+                  style="text-decoration:none; color:#000;"
+                  href="/api/products/single-product/<%= products[i]._id %>"
+                >
+              
+                  <img
+                    src="<%=products[i].image %>"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title"><%= products[i].name %></h5>
+                    <p class="card-text">
+                      Category: <%=products[i].category.name %>
+                    </p>
+                    <p class="card-text">
+                      $<%=products[i].price %>
+                    </p>
+                    <br />
+                    <a href="/api/products/single-product/<%= products[i]._id %>" class="btn btn-success">Buy Now</a>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <% } %>
+             </div>
+           <div style="display:block;">
+            <ul class="pagination text-center ">
+              <%for(let j =1; j <=pages; j++){ if(j===1){%>
+              <li class="my-pagination"><a href="/"><%=j %></a></li>
+              <%}else{%>
+              <li class="my-pagination"><a href="/page/<%=j%>"><%=j %></a></li>
+              <%}%> <%}%>
+            </ul>
+           
+          </div>
+        </div>
+      </main>
+
+      <% include ../partials/footer %>
+    </div>
+    <% include ../partials/scripts %>
+  </body>
+</html>
