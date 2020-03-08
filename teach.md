@@ -738,7 +738,7 @@ router.put('/update-profile', (req, res, next) => {
      https://caolan.github.io/async/v3/docs.html#waterfall
 
 import waterfall from 'async/waterfall';
-Runs the tasks array of functions in series, each passing their results to the next in the array. However, if any of the tasks pass an error to their own callback, the next function is not executed, and the main callback is immediately called with the error.
+Runs the tasks array of functions in series, each passing their results to the next in the function. However, if any of the tasks pass an error to their own callback, the next function is not executed, and the main callback is immediately called with the error. null is the error is null
 
 Parameters:
 Name Type Description
@@ -872,7 +872,7 @@ now we add:
             .populate('category')
             .exec((err, products) => {
             if (err) return next(err);
-            res.render('main/category', { products: products });
+            return res.render('main/category', { products });
             });
         });
 
@@ -881,7 +881,7 @@ now we add:
 
     ```
 
-158. Explain how populate mongoose can only be used with and id which we get from Product.find and then exec is used when we have more than one function to run. Here we are grabbing the id from the url and finding the category which will in turn allow us to pull all of the products associated to that category.
+158. Explain how populate mongoose can only be used with an id which we get from Product.find and then exec is used when we have more than one function to run. Here we are grabbing the id from the url and finding the category which will in turn allow us to pull all of the products associated to that category.
 159. Now we need to create the view to render the products of the category.
 160. In views create category.ejs
 161. Copy code from me.
