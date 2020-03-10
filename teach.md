@@ -857,9 +857,23 @@ now we add:
      JD get rid of that back slash in there
 152. Now we move the add-products to controller. THEY DO
 153. Don't forget imports and re-doing the routes. Test again.
-154. Ok now we are going to create a products page where when we choose a category it shows us all the products for that category.
+
+DAY 6
+
+154. Ok now we are going to create a products page where when we choose a category in the dropdown, it shows us all the products for that category.
 155. First we have to add the route.
 156. Let's go to products and create a productRoutes.js. This is not part of our admin so we want to place it seperately.
+
+Explain:
+POPULATING THE REF TO THE PARENT
+https://mongoosejs.com/docs/2.7.x/docs/populate.html resource
+Comment and author example for you
+So far we've created two models. Our Person model has its stories field set to an array of ObjectIds. The ref option is what tells Mongoose in which model to look, in our case the Story model. All \_ids we store here must be document \_ids from the Story model. We also added a \_creator ObjectId to our Story schema which refers to a single Person.
+
+Yup that's it. We've just queried for a Story with the term Nintendo in it's title and also queried the Person collection for the story's creator. Nice!
+
+Arrays of ObjectId refs work the same way. Just call the populate method on the query and an array of documents will be returned in place of the ObjectIds.
+
 157. Enter code:
 
 
@@ -869,10 +883,11 @@ now we add:
 
         router.get('/all-products/:id', (req, res, next) => {
         Product.find({ category: req.params.id })
-            .populate('category')
-            .exec((err, products) => {
+            .populate('category')  // this is the category field in the Product model
+            .exec((err, products) => {  //return an array of products with the id from category
             if (err) return next(err);
-            return res.render('main/category', { products });
+            return res.json({products}) // for testing
+            //return res.render('main/category', { products }); // real did we build page? not yet. view next
             });
         });
 
@@ -884,11 +899,12 @@ now we add:
 158. Explain how populate mongoose can only be used with an id which we get from Product.find and then exec is used when we have more than one function to run. Here we are grabbing the id from the url and finding the category which will in turn allow us to pull all of the products associated to that category.
 159. Now we need to create the view to render the products of the category.
 160. In views create category.ejs
+     \*\*\*Here we are going to see a similar apprroach to what we could do in the homework that I assigned for the home page
 161. Copy code from me.
 162. This jumbotron is going to become redundant so make it into a partial and replace it in our views where it is
-163. We also need to bring the productController into app.js or it won't work so let's do that.
-     `const productController = ...`
-     `app.use('/products', productController)`
+163. We also need to bring the productRouter into app.js or it won't work so let's do that.
+     `const productRouter = ...`
+     app.use('/api/products', productsRouter);
 164. Test.
 165. Let them know if you haven't that the css is going to get dodgier but should be organized in an ideal world. They should be able to clean up and arrange css by now.
 166. Next we create a single product page to show the product we click on.
@@ -906,18 +922,19 @@ now we add:
         });
 
     ```
-    b. Create the view single-product.ejs
+    b. Create the view single-product.ejs short so you could type?
     c. then in category.ejs we need to change where we click on the product or leave it it will just go to an error page.
 
 166. PAGINATION https://itnext.io/back-end-pagination-with-nodejs-expressjs-mongodb-mongoose-ejs-3566994356e0 video 43
      More or less boilerplate code skip will skip the amount of documents based on whatever page you were on.
 167.
 168. Go to routes/index.js We want to choose our view based on whether we are logged in or not.
-169. First lets choose in index.js the router.get('/') and add
+169. We are going to add a function we havent written yet. We will write it after
+170. First lets choose in index.js the router.get('/') and add
 
      ```
          router.get('/', (req, res, next) => {
-            if (req.user) {
+            if (req.user) {   // or req.isAuthenticated() ?
             paginate(req, res, next);
             } else {
             res.render('main/home', {
@@ -928,7 +945,7 @@ now we add:
 
      ```
 
-170. We called a paginate function. Now We are going to create a function to use in our request handler function so that we will be able to paginate the products. Follow along in index.js. Understand that the function we are writing will actually sit inside the route handler in the if(req.user) body
+171. We called a paginate function. Now We are going to create a function to use in our request handler function so that we will be able to paginate the products. Follow along in index.js. Understand that the function we are writing will actually sit inside the route handler in the if(req.user) body
 
 
         ```
@@ -1395,3 +1412,5 @@ get rid of req.flash in createCategory of categoryController
 
 also need to add create category to the nav bar with a link to api/admin/add-category
 and adminRoutes should have /add-category get route
+
+remember deploy heroku
