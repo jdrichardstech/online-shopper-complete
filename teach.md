@@ -971,7 +971,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 
             ```
 
-    171. Now lets create an ejs page called home-products.ejs (reference product-main.ejs). Type along.
+    171. Now lets create an ejs page called home-products.ejs (reference home-products.ejs). Type along.
     172. Test. Our products show up but if we click on our numbers they don't work. That's because we haven't created a route to handle going to the other pages.
     173. Lets go back and create a route so that when we click the pagination numbers it renders the next 6 products based on the page. We will again use the pagination function. (or extract it from the route if you created it in the route first.)
         a. code
