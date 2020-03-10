@@ -948,22 +948,22 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 171. We called a paginate function. Now We are going to create a function to use in our request handler function so that we will be able to paginate the products. Follow along in index.js. Understand that the function we are writing will actually sit inside the route handler in the if(req.user) body
 
 
-        ```
+           ```
             function paginate(req, res, next) {
-            const perPage = 6;
+            const perPage = 6;   //products per page
             const page = req.params.pageNumber;
             Product.find()
-                .skip(perPage * (page - 1))
-                .limit(perPage)
-                .populate('category')
-                .exec((err, products) => {
+                .skip(perPage * (page - 1))  //skip to the page number you are on, not just 1
+                .limit(perPage) //limit number of products on page to 5
+                .populate('category') //populate our products based on the category
+                .exec((err, products) => {  //pass the products from category to the page
                 if (err) return next(err);
-                Product.countDocuments().exec((err, count) => {
+                Product.countDocuments().exec((err, count) => {   //pass num docs to the render
                     if (err) return next(err);
                     res.render('main/home-products', {
                     products: products,
-                    pages: Math.ceil(count / perPage),
-                    page: Number(page)
+                    pages: Math.ceil(count / perPage), //num docs div by docs per page
+                    page: Number(page)   //pass the page number as a number will use in ejs
                     });
                 });
                 });
