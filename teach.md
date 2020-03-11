@@ -981,7 +981,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
             });
 
         ```
-        b. test. (we are going to leave the last page off right now because of a bug  haven't solved)
+        b. test.
 
 174.  CART
 175.  We are going to create a cart for each logged in user to shop with.
