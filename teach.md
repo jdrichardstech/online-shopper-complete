@@ -1022,11 +1022,11 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 
                     cart.owner = req.user._id
 
-                    cart.save((error) => {
+                    cart.save((error) => {    // here is example of how we can handle error using callback from mongoose
                         if (error) {
                           return  res.status(500).json({
-                                confirmation: 'failure',
-                                message: error
+                                message: 'Cart not saved',
+                                error: error
                             })
                         } else {
                            return res.redirect('/')
@@ -1044,7 +1044,11 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 186.  Now that we have that working we need to create a cart icon and total in our navbar and we need a middleware that will check to see how many items the user has in the cart and post it.
 187.  Let's actually start with the middleware.
 188.  In the cart folder create another folder called middleware.
+      This middleware is going to handle the cart total by adding the number of items from each product together
+      then adding those totals to create one total in the navbar
 
+b. CODE EXPLAIN:
+We are going to loop through the items is because if you notice in the model we have an array of items each one with a total. In order to get the full total of the items we have to loop through and add to the total the quanity we have chosen for each itme. Then we want to have that total available in the locals cartTotal variable.
 
     ```
 
@@ -1109,7 +1113,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
         Cart.findOne({ owner: req.user._id }, (err, cart) => {
             if (err) return next(err);
 
-            cart.items.push({
+            cart.items.push({   // mention that this is how  you add to an array in mongoose.  cart.items = blah blah WILL NOT WORK
             item: req.body.product_id,
             price: parseFloat(req.body.priceValue),
             quantity: parseInt(req.body.quantity)
