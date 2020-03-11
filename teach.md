@@ -986,7 +986,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 174.  CART
 175.  We are going to create a cart for each logged in user to shop with.
 176.  Because the cart is always going to be associated with a user, we are going to add cart functionality in our user routes for this project.
-177.  Go to routes cerate cart folderr and then models folder and create a Cart.js file. This one we will code together because there are a few things different from our other models.
+177.  Go to routes cerate cart folder and then models folder and create a Cart.js file. This one we will code together because there are a few things different from our other models.
 178.  Here is the code:
 
       ```
@@ -1023,12 +1023,12 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 
                     cart.save((error) => {
                         if (error) {
-                            res.status(500).json({
+                          return  res.status(500).json({
                                 confirmation: 'failure',
                                 message: error
                             })
                         } else {
-                            res.redirect('/')
+                           return res.redirect('/')
                         }
                     })
 
@@ -1081,7 +1081,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
     b. CODE EXPLAIN:
     The reason we are looping through the items is because if you notice in the model we have an array of items each one with a total. In order to get the full total of the items we have to loop through and add to the total the quanity we have chosen for each itme. Then we want to have that total available in the locals cartTotal variable.
 
-189.  Now we need to add this middleware to the app.js so that when the user logs in the cart total shows in the navbar. (We haven't added that car to the navbar yet)
+189.  Now we need to add this middleware to the app.js so that when the user logs in the cart total shows in the navbar. (We haven't added that cart to the navbar yet)
       a. NOTE: make sure you put the app.use ABOVE the routes or your locals won't transfer to the routes
 190.  Bring in the cartMiddleware to variable cartTotal and then app.use(cartTotal)
 191.  Now we need to add the cart to the navbar.
@@ -1126,15 +1126,15 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 
     ```
 
-194. Next we need to add the route to app.js as usual.
-195. Go back over the single-product ejs for them
+194. Next we need to add the cartRouter to app.js as usual ....app.use(cartRouter.....).
+195. Let's add the form to the single-product ejs that we created.
 196. Now we want the plus and minus buttons to increment and for the price to increase and decrease when we press the buttons and add or subtract from the quanity.
      We will do that using vanllia javascript.
 197. In your public folder, add a folder called js and a file called productQuantityAdjust.js
      User the code to add plus and minus and compare it to the single-product.ejs page inputs that are hidden
      Hidden values are values we will send to the server while non-hidden are to show to the user
 198. Next we need to add this script into our scripts partial so that it is loaded with the app.
-199. Reboot and test
+199. Reload and test
 200. Next we need to add a cart GET route and a cart page for the Cart. Let's start with the route
 201. Go to your cartRoutes.js and create a page with a route endpoint to show the cart
 202. Test to make sure the route works. Make sure the param route is last
@@ -1155,7 +1155,7 @@ router.get('/cart', (req, res, next) => {
 });
 ```
 
-204. Next create the cart.ejs page in views/main. Lookup code in file.
+204. Next create the cart.ejs page in views/main. Use https://bootsnipp.com/snippets/ZXKKD
 205. Test
 206. Now what if we want to remove an item from the cart? We will need a route to do that and to hook up the functionality of our button in the cart.ejs file
 207. Go to your cartRoutes.js file and add a post route for remove-item \*\*ABOVE PARAM post
