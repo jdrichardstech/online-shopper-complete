@@ -986,7 +986,7 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 174.  CART
 175.  We are going to create a cart for each logged in user to shop with.
 176.  Because the cart is always going to be associated with a user, we are going to add cart functionality in our user routes for this project.
-177.  Go to routes cerate cart folder and then models folder and create a Cart.js file. This one we will code together because there are a few things different from our other models.
+177.  Go to routes cerate cart folder and then models folder and create a Cart.js file. controllers folder and a cartController file and a cartRoute.js
 178.  Here is the code:
 
       ```
@@ -1010,8 +1010,9 @@ Arrays of ObjectId refs work the same way. Just call the populate method on the 
 
 179.  So first we need to delete all of our users because none of our users have a cart.
 180.  Go to Robo 3T. Right click your db and choose drop database
-181.  Now lets create a cart file and cartController.js and a cart route.
-182.  We are going to directly use the cartController instead of the route because the function we are creating will actually be called inside the userRoute.
+181.  Now lets got to cartController.js
+182.  We are going to directly use the cartController instead of the route because the function we are creating will actually be called inside the USERROUTE.
+
 183.  Lets make a function called createUserCart
 
           ```
